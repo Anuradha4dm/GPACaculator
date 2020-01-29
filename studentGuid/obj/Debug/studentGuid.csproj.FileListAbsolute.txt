@@ -11,3 +11,5 @@ C:\Users\ANURADHA\source\repos\studentGuid\studentGuid\obj\Debug\studentGuid.pdb
 C:\Users\ANURADHA\source\repos\studentGuid\studentGuid\obj\Debug\studentGuid.forms.Semester.resources
 C:\Users\ANURADHA\source\repos\studentGuid\studentGuid\obj\Debug\studentGuid.forms.Year.resources
 C:\Users\ANURADHA\source\repos\studentGuid\studentGuid\obj\Debug\studentGuid.forms.DynamicSubject.resources
+C:\Users\ANURADHA\source\repos\studentGuid\studentGuid\bin\Debug\appicationDB.mdf
+C:\Users\ANURADHA\source\repos\studentGuid\studentGuid\bin\Debug\appicationDB_log.ldf

@@ -24,11 +24,11 @@ namespace studentGuid.forms
         int numt = 1;
         int numl = 1;
         int index = 0;
-        double x=0;
+        double x = 0;
         Bcs bcs;
         Traking bcsTracking;
 
-        public DynamicSubject(Bcs bcs,Traking bcsTracking)
+        public DynamicSubject(Bcs bcs, Traking bcsTracking)
         {
             this.bcsTracking = bcsTracking;
             this.bcs = bcs;
@@ -36,7 +36,7 @@ namespace studentGuid.forms
         }
         private void DynamicSubject_Load(object sender, EventArgs e)
         {
-           if(bcsTracking.Year=="year1" && bcsTracking.Semester=="semester1" && bcsTracking.Stream == "bcs")
+            if (bcsTracking.Year == "year1" && bcsTracking.Semester == "semester1" && bcsTracking.Stream == "bcs")
             {
                 foreach (String subject in bcs.bcsyear1sem1)
                 {
@@ -49,6 +49,16 @@ namespace studentGuid.forms
             if (bcsTracking.Year == "year1" && bcsTracking.Semester == "semester2" && bcsTracking.Stream == "bcs")
             {
                 foreach (String subject in bcs.bcsyear1sem2)
+                {
+                    CreateLabel(subject);
+                    CreateTextbox();
+                }
+
+            }
+
+            if (bcsTracking.Year == "year2" && bcsTracking.Semester == "semester2" && bcsTracking.Stream == "bcs")
+            {
+                foreach (String subject in bcs.bcsyear2sem1)
                 {
                     CreateLabel(subject);
                     CreateTextbox();
@@ -105,6 +115,7 @@ namespace studentGuid.forms
                 case "D+": return 1.3;
                 case "D": return 1.0;
                 case "E": return 0.0;
+                case "MD":throw new MedicalException();
                 default: return 0;
 
             }
@@ -114,7 +125,7 @@ namespace studentGuid.forms
         private void SubmitBtn_Click(object sender, EventArgs e)
         {
 
-            if(bcsTracking.Year == "year1" && bcsTracking.Semester == "semester1" && bcsTracking.Stream == "bcs")
+            if (bcsTracking.Year == "year1" && bcsTracking.Semester == "semester1" && bcsTracking.Stream == "bcs")
             {
                 index = 0;
                 x = 0;
@@ -123,19 +134,31 @@ namespace studentGuid.forms
                 {
                     if (childc is TextBox && childc.Name.Contains("txt"))
                     {
-                        x += ResultToValue(((TextBox)childc).Text) * bcs.bcsyear1sem1credits[index];
-                        MessageBox.Show(index.ToString());
+                        try
+                        {
+                            x += (ResultToValue(((TextBox)childc).Text) * bcs.bcsyear1sem1credits[index]);
+                        }
+                        catch(Exception exp)
+                        {
+                            x += (0 * bcs.bcsyear1sem1credits[index]);
+                            bcs.year1sem1TotalCredit -= bcs.bcsyear1sem1credits[index];
+
+                        }
+                        
+                        
                         index++;
                     }
-
-                    bcs.Year1sem1GPA = x / 14.5;
+                    
+                   
 
 
                 }
 
+                bcs.Year1sem1GPA = x / bcs.year1sem1TotalCredit;
+
             }
 
-            if(bcsTracking.Year == "year1" && bcsTracking.Semester == "semester2" && bcsTracking.Stream == "bcs")
+            if (bcsTracking.Year == "year1" && bcsTracking.Semester == "semester2" && bcsTracking.Stream == "bcs")
             {
                 index = 0;
                 x = 0;
@@ -144,7 +167,7 @@ namespace studentGuid.forms
                     if (childc is TextBox && childc.Name.Contains("txt"))
                     {
                         x += ResultToValue(((TextBox)childc).Text) * bcs.bcsyear1sem2credits[index];
-            
+
                         index++;
                     }
 
@@ -153,14 +176,30 @@ namespace studentGuid.forms
 
                 }
 
+                if (bcsTracking.Year == "year2" && bcsTracking.Semester == "semester1" && bcsTracking.Stream == "bcs")
+                {
+                    index = 0;
+                    x = 0;
+                    foreach (Control childc in this.Controls)
+                    {
+                        if (childc is TextBox && childc.Name.Contains("txt"))
+                        {
+                            x += ResultToValue(((TextBox)childc).Text) * bcs.bcsyear2sem1credits[index];
+
+                            index++;
+                        }
+
+                        bcs.Year1sem2GPA = x / 19;
+
+
+                    }
+
+                }
+
+
             }
-   
-            
 
-
-           
-
-
+            this.Close();
         }
     }
 }

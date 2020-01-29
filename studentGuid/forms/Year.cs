@@ -33,11 +33,29 @@ namespace studentGuid.forms
             {
                 this.bcsTracking.Year = "year1";
             }
+            else if (Year2check.Checked)
+            {
+                this.bcsTracking.Year = "yeay2";
+            }
 
             Semester semester = new Semester(bcs,bcsTracking);
             this.Hide();
             semester.Show();
 
+        }
+
+        private void YearGPA_Click(object sender, EventArgs e)
+        {
+            if (bcs.Year1sem1GPA != 0)
+            {
+                label2.Text = bcs.Year1sem1GPA.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Enter the result of each semestetr");
+                Year1check.Checked = true;
+                YearNextBtn.PerformClick();
+            }
         }
     }
 }
